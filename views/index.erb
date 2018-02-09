@@ -1,0 +1,18 @@
+<h1>Applications (<a href="/application/edit/new">Create</a>)</h1>
+
+<table class="table table-bordered table-striped applications">
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>Last Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @applications.each do |app| %>
+      <tr>
+        <td><a href="/application/<%= app.id %>"><%= app.name %></a></td>
+        <td><%= @last_updates[app.id] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

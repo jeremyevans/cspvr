@@ -1,0 +1,31 @@
+<% @page_title = "CSP Violation Report #{@report.id} for #{@application.name}" %>
+
+<form method="post" action="<%= path(@report, "/close") %>">
+  <%== csrf_tag %>
+  <input type="submit" value="Close Report" class="btn btn-warning" />
+</form>
+
+<p class="csp-report-time">Violation Report Received At: <%= @report.at %></p>
+
+<% [[:report, 'Content-Security-Policy Violation Report'], [:request_env, 'Request Environment']].each do |field, caption| %>
+  <table class="table table-bordered table-striped csp-<%= field %>">
+  <caption><%= caption %></caption>
+  <thead>
+    <tr>
+      <th class="key">Key</th>
+      <th class="value">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @report.send(field).sort.each do |k, v| %>
+      <tr>
+        <td class="key"><%= k %></a></td>
+        <td class="value"><a href="<%= path(@application, "/search?field=#{field}&key=#{url_escape(k)}&value=#{url_escape(v)}&type=#{v.is_a?(Integer) ? 'i' : 's'}") %>"><%= v.to_s == '' ? '(empty) ' : v %></a></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+<% end %>
+
+
+<p><a href="<%= path(@application) %>">Return to application page</a><p>

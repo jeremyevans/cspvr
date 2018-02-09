@@ -1,0 +1,46 @@
+<% @page_title ||= @application.name %>
+
+<% if @search %>
+  <p class='matching-criteria'>Matching Criteria: <%= @key %>: <%= @value %></p>
+<% else %>
+  <p>Content-Security-Policy report-uri: <%= request.base_url %>/collect/<%= @application.id %></p>
+<% end %>
+
+<table class="table table-bordered table-striped csp-reports">
+  <caption><%= @search ? 'Matching' : (@all ? 'All' : 'Open') %> CSP Violation Reports for <%= @application.name %></caption>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Reports</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @date_hash.each do |day, report_ids| %>
+      <tr>
+        <td><%= day %></td>
+        <td>
+          <ul>
+            <% report_ids.each do |report_id| %>
+              <li><a href="<%= path(@application, "/report/#{report_id}") %>"><%= report_id %></a></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @search %>
+  <form method="post" action="<%= path(@application, "/search?field=#{@field}&key=#{url_escape(@key)}&value=#{url_escape(@value)}&type=#{@type.is_a?(Integer) ? 'i' : 's'}") %>">
+    <%== csrf_tag %>
+    <input type="submit" value="Close All Matching CSP Violation Reports" class="btn btn-warning" />
+  </form>
+<% else %>
+  <p><a href="<%= path(@application, '/generate_report') %>">Generate CSP Violation Report</a><p>
+
+  <% unless @all %>
+    <p><a href="?all=t">Include Closed CSP Violation Reports</a><p>
+  <% end %>
+
+  <p><a href="/application/edit/<%= @application.id %>">Update Application</a><p>
+<% end %>

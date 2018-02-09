@@ -1,0 +1,16 @@
+.table.csp-reports, .table.applications {
+  width: auto;
+  min-width: 300px;
+  th {text-align: center;}
+  th, td {vertical-align: center;}
+  ul {padding-left: 0; display: inline;}
+  li {display: inline; }
+}
+
+caption {
+  caption-side: top;
+}
+
+.csp-report, .request-env {
+  background-color: #f7f7f7;
+}

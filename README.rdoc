@@ -1,0 +1,125 @@
+= CSPVR
+
+CSPVR is a Content Security Policy Violation Recorder.  It's designed to be
+an endpoint to receive violation reports from web browsers when they detect
+violations the policy specified by the Content-Security-Policy header.
+
+CSPVR is designed to support multiple users and multiple applications, such
+that each user can add applications and only see reports for applications
+they add.
+
+== Setup 
+
+CSPVR has the following dependencies:
+
+* Ruby 1.9+, with libraries specified in Gemfile
+* PostgreSQL 9.4+
+
+Assuming Ruby is installed, you can install the necessary ruby libraries from
+the Gemfile:
+
+  gem install -g Gemfile
+
+CSPVR stores reports in a PostgreSQL database.  It's best if you use an
+application specific PostgreSQL database account.  You can create this via:
+
+  createuser -U postgres cspvr
+  createdb -U postgres -O cspvr cspvr_production
+
+Using an application specific, regular database user account (not a
+database superuser account), is recommended for security reasons.
+
+Configuration is handled via the following environment variables:
+
+CSPVR_DATABASE_URL :: database connection URL to give to Sequel, default is to
+                       create one based on the application's name and RACK_ENV.
+CSPVR_SESSION_SECRET :: secret to use for the rack cookie sessions
+RACK_ENV :: environment to use (production, development, or test), defaults
+            to development.
+
+If a .env.rb file is present at the root of the application, it will be
+required, and you can use this file to set these environment variables.
+You can copy the .env.rb.example file to .env.rb and populate it
+appropriately if you are running the application locally.
+
+After setting the environment up, you can load the initial schema into the
+database:
+
+  rake prod_up
+
+By default, user management only allows login and logout, and not creating
+accounts, so to use the application you have to create users manually:
+
+  RACK_ENV=production ruby -r ./db -r bcrypt -e \
+    "Cspvr::DB[:accounts].insert(:email=>'some login', \
+      :password_hash=>BCrypt::Password.create('some password'))"
+
+== Usage
+
+You can start the application using any appropriate ruby webserver, such
+as unicorn, puma, or even rackup:
+
+  rackup
+
+Navigate to the root of the application, and login with the login and
+password you used when creating the account during setup.
+
+Click on the Create link, fill in the application name, and click
+Create Application. You will then see near the top of the page the
+report-uri you can use in your Content-Security-Policy header.
+
+If you want to test the CSP violation reporting, click on the Generate
+CSP Violation Report link.  This link should cause a CSP violation
+report to be generated.  Click on the Return to application page link
+and you should see a row in the table with today's date, with a numbered
+link for the report (which should be 1 if this is the first report). Click
+on the numbered link to see the report.
+
+The CSP violation reports show the time of the report, the body/contents
+of the report, as well as the environment of the request that submitted
+the report.  You can use the Close Report button to close the report, after
+you have fixed the underlying violation.  To find similar violations, you
+can use the link in the value column of either the report or request
+environment, which will return all open violations for the application that
+have the same value for the given key.  On that screen, you can use the
+Close All Matching CSP Report Violations button to close all of the
+violation reports that match the criteria.
+
+== Collect Only
+
+If you want to setup a application that only collects reports and does not
+offer an interface to login and view them, you can use the config-collector.ru
+rackup file instead of the standard config.ru rackup file.
+
+== Development and Testing
+
+If you plan to do development or testing of CSPVR, you should also create
+separate databases for testing or development, and load the schema for those
+databases:
+
+  createdb -U postgres -O cspvr cspvr_test
+  createdb -U postgres -O cspvr cspvr_development
+  rake dev_up  # Migrate the development database up
+  rake test_up # Migrate the test database up
+
+For development, you'll need to create users as shown in the Setup above,
+but using RACK_ENV=development.
+
+You can run the tests with rake:
+
+  rake
+
+== Extra Security
+
+To support greater security when running in collect only mode, you can use
+a separate database user with only INSERT permissions into the csp_reports
+table.  Review and uncomment the related code in migrate/001_tables.rb before
+running the migrations, and also review and uncomment the related code in the
+web_spec rake task so you can can test with a separate database user. Then
+modify the CSPVR_DATABASE_URL environment variable when running the application
+and when running the collect only specs to use the separate database user.
+By default, the migration assumes the separate user will be named cspvr_public.
+
+== Author
+
+Jeremy Evans <code@jeremyevans.net>
