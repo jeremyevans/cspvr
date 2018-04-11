@@ -12,6 +12,7 @@ class BaseApp < Roda
     :secret=>(ENV.delete('CSPVR_SESSION_SECRET') || SecureRandom.hex(40))
 
   plugin :rodauth do
+    db DB
     enable :login, :logout
     account_password_hash_column :password_hash
     title_instance_variable :@page_title
