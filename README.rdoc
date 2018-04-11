@@ -32,7 +32,7 @@ database superuser account), is recommended for security reasons.
 Configuration is handled via the following environment variables:
 
 CSPVR_DATABASE_URL :: database connection URL to give to Sequel, default is to
-                       create one based on the application's name and RACK_ENV.
+                      create one based on the application's name and RACK_ENV.
 CSPVR_SESSION_SECRET :: secret to use for the rack cookie sessions
 RACK_ENV :: environment to use (production, development, or test), defaults
             to development.
