@@ -19,7 +19,7 @@ module Cspvr
     Unreloader = Rack::Unreloader.new(:reload=>false)
   end
 
-  Unreloader.require('models'){|f| "Cspvr::" + Sequel::Model.send(:camelize, File.basename(f).sub(/\.rb\z/, ''))}
+  Unreloader.require(File.expand_path('../models', __FILE__)){|f| "Cspvr::" + Sequel::Model.send(:camelize, File.basename(f).sub(/\.rb\z/, ''))}
 
   if ENV['RACK_ENV'] == 'development'
     require 'logger'
