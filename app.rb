@@ -59,7 +59,7 @@ class App < BaseApp
     end
   end
 
-  Unreloader.require('routes'){}
+  Unreloader.require(File.expand_path('../routes', __FILE__)){}
 
   route do |r|
     r.on "collect" do

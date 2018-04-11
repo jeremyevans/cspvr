@@ -8,5 +8,5 @@ end
 require 'rack/unreloader'
 Unreloader = Rack::Unreloader.new(:subclasses=>%w'Roda Cspvr::Model', :logger=>logger, :reload=>dev){Cspvr::App}
 require_relative 'models'
-Unreloader.require('app.rb'){'Cspvr::App'}
+Unreloader.require(File.expand_path('../app.rb', __FILE__)){'Cspvr::App'}
 run(dev ? Unreloader : Cspvr::App.freeze.app)
