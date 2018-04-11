@@ -8,6 +8,11 @@ CSPVR is designed to support multiple users and multiple applications, such
 that each user can add applications and only see reports for applications
 they add.
 
+== Demo
+
+A demo site is available at http://cspvr-demo.jeremyevans.net, with
+login/password: cspvr_demo/cspvr_demo.
+
 == Setup 
 
 CSPVR has the following dependencies:
