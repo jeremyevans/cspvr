@@ -20,6 +20,8 @@ class BaseApp < Roda
 end unless defined?(BaseApp)
 
 class App < BaseApp
+  opts[:root] = File.dirname(__FILE__)
+
   plugin :default_headers,
     'Content-Type'=>'text/html',
     'Content-Security-Policy'=>"default-src 'none'; style-src 'self' https://maxcdn.bootstrapcdn.com; form-action 'self';",
