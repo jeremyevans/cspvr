@@ -31,7 +31,7 @@
 </table>
 
 <% if @search %>
-  <form method="post" action="<%= path(@application, "/search?field=#{@field}&key=#{url_escape(@key)}&value=#{url_escape(@value)}&type=#{@type.is_a?(Integer) ? 'i' : 's'}") %>">
+  <form method="post" action="<%= path(@application, "/search?field=#{@field}&key=#{url_escape(@key)}&value=#{url_escape(@value)}&type=#{@value.is_a?(Integer) ? 'i' : 's'}") %>">
     <%== csrf_tag %>
     <input type="submit" value="Close All Matching CSP Violation Reports" class="btn btn-warning" />
   </form>
