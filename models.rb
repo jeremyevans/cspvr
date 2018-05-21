@@ -12,6 +12,7 @@ module Cspvr
 
   Model.plugin :auto_validations, :not_null=>:presence
   Model.plugin :prepared_statements
+  Model.plugin :pg_auto_constraint_validations
   Model.plugin :subclasses unless ENV['RACK_ENV'] == 'development'
 
   unless defined?(Unreloader)
