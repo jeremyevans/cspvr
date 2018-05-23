@@ -1,7 +1,7 @@
 <% @page_title = "CSP Violation Report #{@report.id} for #{@application.name}" %>
 
-<form method="post" action="<%= path(@report, "/close") %>">
-  <%== csrf_tag %>
+<form method="post" action="<%= close_path = path(@report, "/close") %>">
+  <%== csrf_tag(close_path) %>
   <input type="submit" value="Close Report" class="btn btn-warning" />
 </form>
 

@@ -11,7 +11,7 @@ class BaseApp < Roda
     #:secure=>(ENV['RACK_ENV'] != 'test'), # Uncomment if only allowing https:// access
     :secret=>(ENV.delete('CSPVR_SESSION_SECRET') || SecureRandom.hex(40))
 
-  plugin :rodauth do
+  plugin :rodauth, :csrf=>:route_csrf do
     db DB
     enable :login, :logout
     account_password_hash_column :password_hash
@@ -32,7 +32,7 @@ class App < BaseApp
     'X-XSS-Protection'=>'1; mode=block'
 
   plugin :disallow_file_uploads
-  plugin :csrf, :skip => ['POST:/collect/\d+']
+  plugin :route_csrf
   plugin :assets, :css=>'app.scss', :css_opts=>{:style=>:compressed, :cache=>false}, :timestamp_paths=>true
   plugin :render, :escape=>true
   plugin :multi_route
@@ -67,6 +67,7 @@ class App < BaseApp
     end
 
     r.assets
+    check_csrf!
     r.rodauth
     rodauth.require_authentication
     r.multi_route

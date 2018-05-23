@@ -14,7 +14,7 @@
         <a class="navbar-brand" href="/">CSPVR</a>
         <% if account_id %>
           <form action="/logout" class="navbar-form" method="post">
-            <%== csrf_tag %>
+            <%== csrf_tag("/logout") %>
             <input class="btn btn-warning pull-right form-control" type="submit" value="Logout" />
           </form>
         <% end %>

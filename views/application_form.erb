@@ -1,7 +1,7 @@
 <% @page_title = @application.new? ? 'Create Application' : 'Update Application' %>
 
 <form method="post">
-  <%== csrf_tag %>
+  <%== csrf_tag(request.path) %>
   <div class="form-group">
     <label for="name">Application Name</label>
     <input type="text" class="form-control" id="name" name="name" value="<%= @application.name %>" required />
