@@ -30,7 +30,10 @@ class App
       end
 
       r.get 'generate_report' do
-        response['Content-Security-Policy'] = "default-src 'none'; style-src 'self' https://maxcdn.bootstrapcdn.com; img-src 'self'; report-uri #{request.base_url}/collect/#{application_id}"
+        content_security_policy do |csp|
+          csp.img_src :self
+          csp.report_uri "#{request.base_url}/collect/#{application_id}"
+        end
         :generate_report
       end
 
