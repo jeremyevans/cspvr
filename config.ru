@@ -10,3 +10,12 @@ Unreloader = Rack::Unreloader.new(:subclasses=>%w'Roda Cspvr::Model', :logger=>l
 require_relative 'models'
 Unreloader.require(File.expand_path('../app.rb', __FILE__)){'Cspvr::App'}
 run(dev ? Unreloader : Cspvr::App.freeze.app)
+
+unless dev
+  begin
+    require 'refrigerator'
+  rescue LoadError
+  else
+    Refrigerator.freeze_core
+  end
+end

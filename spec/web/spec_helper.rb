@@ -15,6 +15,13 @@ raise "test database doesn't end with test" unless Cspvr::DB.opts[:database] =~ 
 
 Capybara.app = Cspvr::App.freeze
 
+begin
+  require 'refrigerator'
+rescue LoadError
+else
+  Refrigerator.freeze_core
+end
+
 class Minitest::HooksSpec
   include Rack::Test::Methods
   include Capybara::DSL

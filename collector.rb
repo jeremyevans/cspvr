@@ -22,6 +22,3 @@ class App < Roda
   end
 end
 end
-
-require 'refrigerator'
-Refrigerator.freeze_core

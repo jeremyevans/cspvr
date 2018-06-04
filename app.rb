@@ -108,8 +108,3 @@ class App < BaseApp
   end
 end
 end
-
-unless ENV['RACK_ENV'] == 'development'
-  require 'refrigerator'
-  Refrigerator.freeze_core
-end
