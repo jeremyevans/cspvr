@@ -87,12 +87,13 @@ end
 
 desc "Run web specs"
 task :web_spec do
+  next if RUBY_VERSION < '2'
   spec.call('./spec/web/*_spec.rb')
-  spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'1')
+  #spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'1')
 
   # Support testing using a separate database user with only INSERT access
   # to the csp_reports table
-  #spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'separate_user')
+  spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'separate_user')
 end
 
 # Misc

@@ -13,7 +13,7 @@ class App
         handle_validation_failure(:application_form, "There was an error saving the application") do
           @application.save
         end
-        flash[:notice] = "Application #{application_id == 'new' ? 'Created' : 'Updated'}: #{@application.name}"
+        flash['notice'] = "Application #{application_id == 'new' ? 'Created' : 'Updated'}: #{@application.name}"
         r.redirect path(@application)
       end
     end
@@ -57,7 +57,7 @@ class App
 
         r.post do
           num_closed = ds.close!
-          flash[:notice] = "Closed #{num_closed} CSP Violation Reports for Application #{@application.name}"
+          flash['notice'] = "Closed #{num_closed} CSP Violation Reports for Application #{@application.name}"
           r.redirect path(@application)
         end
       end
@@ -71,7 +71,7 @@ class App
 
         r.post "close" do
           @report.this.active.close!
-          flash[:notice] = "Closed CSP Violation Report #{@report.id} for Application #{@application.name}"
+          flash['notice'] = "Closed CSP Violation Report #{@report.id} for Application #{@application.name}"
           r.redirect path(@application)
         end
       end

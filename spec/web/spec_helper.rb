@@ -4,10 +4,14 @@ require 'capybara'
 require 'capybara/dsl'
 require 'rack/test'
 require 'bcrypt'
+require 'securerandom'
 
 require_relative '../minitest_helper'
 
 Gem.suffix_pattern
+
+ENV['CSPVR_SESSION_CIPHER_SECRET'] = SecureRandom.base64(24)
+ENV['CSPVR_SESSION_HMAC_SECRET'] = SecureRandom.base64(24)
 
 require_relative(ENV["CSPVR_COLLECTOR_ONLY"] ? '../../collector' : '../../app')
 

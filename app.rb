@@ -6,10 +6,12 @@ require 'tilt/sass'
 module Cspvr
 # App initialization that does not get reloaded
 class BaseApp < Roda
-  use Rack::Session::Cookie,
-    :key => '_Cspvr_session',
-    #:secure=>(ENV['RACK_ENV'] != 'test'), # Uncomment if only allowing https:// access
-    :secret=>(ENV.delete('CSPVR_SESSION_SECRET') || SecureRandom.hex(40))
+  plugin :flash
+  plugin :sessions,
+    :cipher_secret=>ENV.delete('CSPVR_SESSION_CIPHER_SECRET'),
+    :hmac_secret=>ENV.delete('CSPVR_SESSION_HMAC_SECRET'),
+    #:cookie_options=>{:secure=>(ENV['RACK_ENV'] != 'test'), :path=>'/', :httponly=>true}, # Uncomment if only allowing https:// access
+    :key => 'cspvr.session'
 
   plugin :rodauth, :csrf=>:route_csrf do
     db DB
@@ -89,7 +91,7 @@ class App < BaseApp
   def handle_validation_failure(template, error_flash)
     yield
   rescue Sequel::ValidationFailed
-    flash.now[:error] = error_flash
+    flash.now['error'] = error_flash
     response.status = 400
     response.write(view(template))
     request.halt
