@@ -38,8 +38,7 @@ Configuration is handled via the following environment variables:
 
 CSPVR_DATABASE_URL :: database connection URL to give to Sequel, default is to
                       create one based on the application's name and RACK_ENV.
-CSPVR_SESSION_CIPHER_SECRET :: cipher secret to use, 32 bytes
-CSPVR_SESSION_HMAC_SECRET :: HMAC secret to use, >=32 bytes
+CSPVR_SESSION_SECRET :: session secret to use, >=64 bytes
 RACK_ENV :: environment to use (production, development, or test), defaults
             to development.
 

@@ -10,8 +10,7 @@ require_relative '../minitest_helper'
 
 Gem.suffix_pattern
 
-ENV['CSPVR_SESSION_CIPHER_SECRET'] = SecureRandom.base64(24)
-ENV['CSPVR_SESSION_HMAC_SECRET'] = SecureRandom.base64(24)
+ENV['CSPVR_SESSION_SECRET'] = SecureRandom.base64(48)
 
 require_relative(ENV["CSPVR_COLLECTOR_ONLY"] ? '../../collector' : '../../app')
 
@@ -23,7 +22,7 @@ begin
   require 'refrigerator'
 rescue LoadError
 else
-  Refrigerator.freeze_core
+  Refrigerator.freeze_core(:except=>['BasicObject'])
 end
 
 class Minitest::HooksSpec

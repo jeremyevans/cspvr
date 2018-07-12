@@ -8,8 +8,7 @@ module Cspvr
 class BaseApp < Roda
   plugin :flash
   plugin :sessions,
-    :cipher_secret=>ENV.delete('CSPVR_SESSION_CIPHER_SECRET'),
-    :hmac_secret=>ENV.delete('CSPVR_SESSION_HMAC_SECRET'),
+    :secret=>ENV.delete('CSPVR_SESSION_SECRET'),
     #:cookie_options=>{:secure=>(ENV['RACK_ENV'] != 'test'), :path=>'/', :httponly=>true}, # Uncomment if only allowing https:// access
     :key => 'cspvr.session'
 
