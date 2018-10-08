@@ -51,6 +51,24 @@ class App < BaseApp
   path(Application){|app, rest=""| "/application/#{app.id}#{rest}"}
   path(CspReport){|rep, rest=""| "/application/#{rep.application_id}/report/#{rep.id}#{rest}"}
 
+  logger = case ENV['RACK_ENV']
+  when 'development', 'test' # Remove development after Unicorn 5.5+
+    Class.new{def write(_) end}.new
+  else
+    $stderr
+  end
+  plugin :common_logger, logger
+
+  if ENV['RACK_ENV'] == 'development'
+    plugin :exception_page
+    class RodaRequest
+      def assets
+        exception_page_assets
+        super
+      end
+    end
+  end
+
   plugin :not_found do
     view(:content=>'<h1>File Not Found</h1>')
   end
@@ -63,6 +81,7 @@ class App < BaseApp
     else
       $stderr.puts "#{e.class}: #{e.message}"
       $stderr.puts e.backtrace
+      next exception_page(e, :assets=>true) if ENV['RACK_ENV'] == 'development'
       view(:content=>'<h1>Internal Server Error</h1>')
     end
   end
