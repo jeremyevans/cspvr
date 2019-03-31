@@ -6,6 +6,10 @@ require 'tilt/sass'
 module Cspvr
 # App initialization that does not get reloaded
 class BaseApp < Roda
+  opts[:check_dynamic_arity] = false
+  opts[:check_arity] = :warn
+
+  plugin :direct_call
   plugin :flash
   plugin :sessions,
     :secret=>ENV.delete('CSPVR_SESSION_SECRET'),
