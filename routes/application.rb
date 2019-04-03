@@ -1,6 +1,6 @@
 module Cspvr
 class App
-  route 'application' do |r|
+  hash_branch :root, 'application' do |r|
     r.is "edit", ["new", Integer] do |application_id|
       @application = application_id == "new" ? Application.new(:account_id=>account_id) : application_ds.with_pk!(application_id)
 

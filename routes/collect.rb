@@ -23,7 +23,7 @@ class App
   END
   ps = DB[:csp_reports].returning(nil).prepare(:insert, :insert_csp, :application_id=>:$application_id, :request_env=>:$request_env, :report=>:$report)
 
-  route :collect do |r|
+  hash_branch :preauth, 'collect' do |r|
     r.post Integer do |application_id|
       input = env["rack.input"]
       begin
