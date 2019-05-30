@@ -51,7 +51,7 @@ describe '/application' do
     report.refresh[:open].must_equal false
 
     page.all('td').map(&:text).must_equal [Date.today.to_s, [r3.id, r2.id, r1.id].join(' ')]
-    click_link r2.id
+    click_link r2.id.to_s
     click_link 'bar'
     page.title.must_equal 'CSPVR - Matching CSP Violation Reports for TestApp2'
     find('.matching-criteria').text.must_equal 'Matching Criteria: FOO: bar'
@@ -68,7 +68,7 @@ describe '/application' do
     r4 = Cspvr::Application.first.add_csp_report(:request_env=>{'BAR'=>'foo'}, :report=>{'a'=>1})
     click_link 'CSPVR'
     click_link 'TestApp2'
-    click_link r4.id
+    click_link r4.id.to_s
     click_link '1'
     page.all('td').map(&:text).must_equal [Date.today.to_s, r4.id.to_s]
     click_button 'Close All Matching CSP Violation Reports'
