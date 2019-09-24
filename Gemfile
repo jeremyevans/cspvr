@@ -11,6 +11,9 @@ gem 'sequel_pg', '>= 1.7'
 gem 'rack-unreloader', '>= 1.2'
 gem 'refrigerator', '>= 1'
 
-gem 'capybara', '>= 2'
-gem 'minitest', '>= 5.7.0'
-gem 'minitest-hooks', '>= 1.1.0'
+group :development, :test do
+  gem 'capybara', '>= 2'
+  gem 'minitest', '>= 5.7.0'
+  gem 'minitest-hooks', '>= 1.1.0'
+  gem "minitest-global_expectations"
+end
