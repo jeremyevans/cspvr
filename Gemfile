@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rack', '>= 1.6'
-gem 'tilt', '>= 2'
-gem 'sass', '>= 3.4', '< 3.5'
+gem 'tilt', '>= 2.0.10'
+gem 'sassc', '>= 2'
 gem 'erubi', '>= 1.5'
 gem 'roda', '>= 3.19'
 gem 'rodauth', '>= 1.18'
