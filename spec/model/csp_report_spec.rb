@@ -45,7 +45,7 @@ describe Cspvr::CspReport do
     @class.most_recent_date_hash([@app.id]).must_equal(@app.id=>Date.today)
     @rep.update(:at=>Date.today - 1)
     @class.most_recent_date_hash([@app.id]).must_equal(@app.id=>Date.today-1)
-    rep2 = @app.add_csp_report(:request_env=>{'a'=>'b'}, :report=>{'c'=>'d'})
+    @app.add_csp_report(:request_env=>{'a'=>'b'}, :report=>{'c'=>'d'})
     @class.most_recent_date_hash([@app.id]).must_equal(@app.id=>Date.today)
   end
 end
