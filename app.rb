@@ -5,7 +5,9 @@ require 'tilt/sass'
 
 module Cspvr
 # App initialization that does not get reloaded
+# :nocov:
 class BaseApp < Roda
+# :nocov:
   opts[:check_dynamic_arity] = false
   opts[:check_arity] = :warn
 
@@ -25,7 +27,9 @@ class BaseApp < Roda
   precompile_rodauth_templates
 end unless defined?(BaseApp)
 
+# :nocov:
 class App < BaseApp
+# :nocov:
   opts[:root] = File.dirname(__FILE__)
 
   plugin :default_headers,
@@ -58,11 +62,14 @@ class App < BaseApp
   logger = case ENV['RACK_ENV']
   when 'development', 'test' # Remove development after Unicorn 5.5+
     Class.new{def write(_) end}.new
+  # :nocov:
   else
     $stderr
+  # :nocov:
   end
   plugin :common_logger, logger
 
+  # :nocov:
   if ENV['RACK_ENV'] == 'development'
     plugin :exception_page
     class RodaRequest
@@ -76,6 +83,7 @@ class App < BaseApp
   plugin :not_found do
     view(:content=>'<h1>File Not Found</h1>')
   end
+  # :nocov:
 
   plugin :error_handler do |e|
     if e.is_a?(Roda::RodaPlugins::TypecastParams::Error)
