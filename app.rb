@@ -91,10 +91,15 @@ class App < BaseApp
       @page_title = 'Invalid Parameter Format'
       view(:content=>"<p>Parameter #{h e.param_name} is not in the expected format.</p>")
     else
-      $stderr.puts "#{e.class}: #{e.message}"
-      $stderr.puts e.backtrace
-      next exception_page(e, :assets=>true) if ENV['RACK_ENV'] == 'development'
-      view(:content=>'<h1>Internal Server Error</h1>')
+      # :nocov:
+      unless ENV['RACK_ENV'] == 'test'
+        $stderr.puts "#{e.class}: #{e.message}"
+        $stderr.puts e.backtrace
+        next exception_page(e, :assets=>true) if ENV['RACK_ENV'] == 'development'
+      end
+      # :nocov:
+      @page_title = 'Internal Server Error'
+      view(:content=>'')
     end
   end
 
