@@ -57,6 +57,7 @@ describe '/application' do
     find('.matching-criteria').text.must_equal 'Matching Criteria: FOO: bar'
     find('caption').text.must_equal "Matching CSP Violation Reports for TestApp2"
     page.all('td').map(&:text).must_equal [Date.today.to_s, [r2.id, r1.id].join(' ')]
+    search_path = page.current_path
     click_button 'Close All Matching CSP Violation Reports'
     find('.alert-success').text.must_include "Closed 2 CSP Violation Reports for Application TestApp2"
 
@@ -73,5 +74,14 @@ describe '/application' do
     page.all('td').map(&:text).must_equal [Date.today.to_s, r4.id.to_s]
     click_button 'Close All Matching CSP Violation Reports'
     find('.alert-success').text.must_include "Closed 1 CSP Violation Reports for Application TestApp2"
+
+    visit search_path
+    page.title.must_equal 'CSPVR - Invalid Parameter Format'
+
+    visit "#{search_path}?field=xyz&key=&value=&type="
+    page.html.must_include 'Invalid field value'
+
+    visit '/application/edit/0'
+    page.title.must_equal 'CSPVR - Internal Server Error'
   end
 end
