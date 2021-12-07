@@ -23,6 +23,7 @@ class BaseApp < Roda
     enable :login, :logout
     account_password_hash_column :password_hash
     title_instance_variable :@page_title
+    login_input_type 'text'
   end
   precompile_rodauth_templates
 end unless defined?(BaseApp)
