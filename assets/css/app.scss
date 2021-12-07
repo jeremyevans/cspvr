@@ -1,16 +1,137 @@
+* {box-sizing: border-box;}
+
 .table.csp-reports, .table.applications {
   width: auto;
   min-width: 300px;
   th {text-align: center;}
-  th, td {vertical-align: center;}
+  th, td {vertical-align: middle;}
   ul {padding-left: 0; display: inline;}
   li {display: inline; }
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 caption {
   caption-side: top;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 10px;
+
+  &, td, th {
+    border: 1px solid black;
+  }
+  td, th {
+    padding: 5px;
+  }
+  tr:nth-child(2n) {
+    background-color: #eee;
+  }
+}
+
+a {
+  &, &:hover, &:visited { color: #007bff; text-decoration: none; }
+  &:hover { text-decoration: underline; }
+}
+
+.error {
+  border: 1px solid #dc3545;
+}
+
+.error_message {
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.25rem;
+  color: #dc3545;
+}
+
+.btn {
+  border-radius: 4px;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  padding: 5px 10px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.btn-warning {
+  color: #000;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 5px;
 }
 
 .csp-report, .request-env {
   background-color: #f7f7f7;
+}
+
+.container {
+  max-width: 1170px;
+  margin: auto;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 15px;
+
+  label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.alert {
+  font-size: 18px;
+  padding: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.navbar-default {
+  color: #007bff;
+  margin-bottom: 10px;
+  .navbar-brand {
+    font-size: 28px;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+  .navbar-form {
+    width: auto;
+    padding: 5px;
+    margin-right: 20px;
+    border: 0;
+    float: right;
+    .form-control {
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+      padding: 3px 10px;
+      font-size: 16px;
+    }
+  }
 }

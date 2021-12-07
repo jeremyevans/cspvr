@@ -42,7 +42,7 @@ class App < BaseApp
 
   plugin :content_security_policy do |csp|
     csp.default_src :none
-    csp.style_src :self, 'https://maxcdn.bootstrapcdn.com'
+    csp.style_src :self
     csp.form_action :self
     csp.base_uri :none
     csp.frame_ancestors :none
