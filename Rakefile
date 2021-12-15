@@ -71,7 +71,7 @@ spec = proc do |pattern, env={}|
     prev[k] = ENV[k]
     ENV[k] = v
   end
-  sh "#{FileUtils::RUBY} -e 'ARGV.each{|f| require f}' #{pattern}"
+  sh "#{FileUtils::RUBY} #{'-w' if RUBY_VERSION >= '3'} -e 'ARGV.each{|f| require f}' #{pattern}"
   prev.each do |k,v|
     ENV[k] = v
   end

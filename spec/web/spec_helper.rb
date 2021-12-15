@@ -1,5 +1,4 @@
 ENV["RACK_ENV"] = "test"
-require_relative '../warnings_helper'
 
 require 'capybara'
 require 'capybara/dsl'
