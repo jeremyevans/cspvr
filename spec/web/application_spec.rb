@@ -8,7 +8,7 @@ describe '/application' do
     click_button 'Create Application'
     find('.alert-danger').text.must_equal 'There was an error saving the application'
 
-    fill_in 'Name', :with=>'TestApp'
+    fill_in 'Application Name', :with=>'TestApp'
     click_button 'Create Application'
     find('.alert-success').text.must_equal 'Application Created: TestApp'
 
@@ -17,11 +17,11 @@ describe '/application' do
     click_link 'Update Application'
     page.title.must_equal 'CSPVR - Update Application'
 
-    fill_in 'Name', :with=>''
+    fill_in 'Application Name', :with=>''
     click_button 'Update Application'
     find('.alert-danger').text.must_equal 'There was an error saving the application'
 
-    fill_in 'Name', :with=>'TestApp2'
+    fill_in 'Application Name', :with=>'TestApp2'
     click_button 'Update Application'
     find('.alert-success').text.must_equal 'Application Updated: TestApp2'
 

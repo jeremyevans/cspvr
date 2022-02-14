@@ -16,7 +16,8 @@ require_relative(ENV["CSPVR_COLLECTOR_ONLY"] ? '../../collector' : '../../app')
 
 raise "test database doesn't end with test" unless Cspvr::DB.opts[:database] =~ /test\z/
 
-Capybara.app = Cspvr::App.freeze
+Capybara.app = Cspvr::App.freeze.app
+Capybara.exact = true
 
 begin
   require 'refrigerator'
