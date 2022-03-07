@@ -2,6 +2,7 @@ ENV["RACK_ENV"] = "test"
 
 require 'capybara'
 require 'capybara/dsl'
+require 'capybara/validate_html5'
 require 'rack/test'
 require 'bcrypt'
 require 'securerandom'
