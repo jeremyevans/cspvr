@@ -13,7 +13,7 @@ gem 'refrigerator', '>= 1'
 
 group :development, :test do
   gem 'capybara', '>= 2'
-  gem 'capybara-validate_html5'
+  gem 'capybara-validate_html5', '>= 1.1.0'
   gem 'minitest', '>= 5.7.0'
   gem 'minitest-hooks', '>= 1.1.0'
   gem "minitest-global_expectations"
