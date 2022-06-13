@@ -52,7 +52,7 @@ class App < BaseApp
   plugin :route_csrf
   plugin :assets, :css=>'app.scss', :css_opts=>{:style=>:compressed, :cache=>false}, :timestamp_paths=>true
   plugin :render, :escape=>true
-  plugin :hash_routes
+  plugin :hash_branches
   plugin :symbol_views
   plugin :typecast_params
 
@@ -106,19 +106,20 @@ class App < BaseApp
 
   Unreloader.require(File.expand_path('../routes', __FILE__)){}
 
-  hash_path :root, "/" do |r|
-    @applications = application_ds.by_name.all
-    @last_updates = CspReport.active.most_recent_date_hash(@applications.map(&:id))
-    view 'index'
-  end
-
   route do |r|
-    r.hash_routes(:preauth)
+    r.hash_branches(:preauth)
     r.assets
     r.rodauth
     check_csrf!
     rodauth.require_authentication
-    r.hash_routes(:root)
+
+    r.root do
+      @applications = application_ds.by_name.all
+      @last_updates = CspReport.active.most_recent_date_hash(@applications.map(&:id))
+      view 'index'
+    end
+
+    r.hash_branches(:root)
   end
 
   def handle_validation_failure(template, error_flash)

@@ -12,11 +12,11 @@ DB.freeze
 
 class App < Roda
   plugin :disallow_file_uploads
-  plugin :hash_routes
+  plugin :hash_branches
   require_relative 'routes/collect'
 
   route do |r|
-    r.hash_routes(:preauth)
+    r.hash_branches(:preauth)
   end
 end
 end
