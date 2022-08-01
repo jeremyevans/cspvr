@@ -14,6 +14,7 @@ module Cspvr
   Model.plugin :prepared_statements
   Model.plugin :pg_auto_constraint_validations
   Model.plugin :auto_restrict_eager_graph
+  Model.plugin :require_valid_schema
   Model.plugin :subclasses unless ENV['RACK_ENV'] == 'development'
 
   unless defined?(Unreloader)
