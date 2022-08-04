@@ -51,7 +51,7 @@ class App < BaseApp
   plugin :disallow_file_uploads
   plugin :route_csrf
   plugin :assets, :css=>'app.scss', :css_opts=>{:style=>:compressed, :cache=>false}, :timestamp_paths=>true
-  plugin :render, :escape=>true
+  plugin :render, :escape=>true, :template_opts=>{:chain_appends=>true}
   plugin :hash_branches
   plugin :symbol_views
   plugin :typecast_params
