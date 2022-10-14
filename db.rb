@@ -9,7 +9,7 @@ require 'sequel/core'
 # passed to subprocesses.  CSPVR_DATABASE_URL may contain passwords.
 module Cspvr
   DB = Sequel.connect(ENV.delete('CSPVR_DATABASE_URL') || ENV.delete('DATABASE_URL'))
-  DB.extension :pg_json
+  DB.extension :pg_json, :pg_auto_parameterize
   Sequel.extension :pg_json_ops
 
   if ENV['RACK_ENV'] == 'test'
@@ -22,7 +22,7 @@ module Cspvr
       module AsDefaultUser
         %w'insert update delete'.each do |meth|
           define_method(meth) do |*a|
-            db.run "SELECT exec_as_default_user(#{literal(disable_insert_returning.send(:"#{meth}_sql", *a))})"
+            db.get(Sequel.function(:exec_as_default_user, disable_insert_returning.no_auto_parameterize.send(:"#{meth}_sql", *a)))
           end
         end
       end
