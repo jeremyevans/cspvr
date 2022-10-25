@@ -54,7 +54,8 @@ class App < BaseApp
   plugin :render, :escape=>true, :template_opts=>{:chain_appends=>true}
   plugin :hash_branches
   plugin :symbol_views
-  plugin :typecast_params
+  plugin :Integer_matcher_max
+  plugin :typecast_params_sized_integers, :sizes=>[64], :default_size=>64
 
   plugin :path
   path(Application){|app, rest=""| "/application/#{app.id}#{rest}"}
