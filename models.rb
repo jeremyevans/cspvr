@@ -26,8 +26,5 @@ module Cspvr
   if ENV['RACK_ENV'] == 'development'
     require 'logger'
     DB.loggers << Logger.new($stdout)
-  else
-    Model.freeze_descendents
-    DB.freeze
   end
 end

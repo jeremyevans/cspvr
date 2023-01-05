@@ -80,6 +80,12 @@ class App < BaseApp
         super
       end
     end
+  else
+    def self.freeze
+      Model.freeze_descendents
+      DB.freeze
+      super
+    end
   end
 
   plugin :not_found do
