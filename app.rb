@@ -58,8 +58,6 @@ class App < BaseApp
   plugin :typecast_params_sized_integers, :sizes=>[64], :default_size=>64
 
   plugin :path
-  path(Application){|app, rest=""| "/application/#{app.id}#{rest}"}
-  path(CspReport){|rep, rest=""| "/application/#{rep.application_id}/report/#{rep.id}#{rest}"}
 
   logger = case ENV['RACK_ENV']
   when 'development', 'test' # Remove development after Unicorn 5.5+
@@ -89,7 +87,8 @@ class App < BaseApp
   end
 
   plugin :not_found do
-    view(:content=>'<h1>File Not Found</h1>')
+    @page_title = 'File Not Found'
+    view(:content=>'')
   end
   # :nocov:
 
@@ -100,18 +99,23 @@ class App < BaseApp
       view(:content=>"<p>Parameter #{h e.param_name} is not in the expected format.</p>")
     else
       # :nocov:
-      unless ENV['RACK_ENV'] == 'test'
-        $stderr.puts "#{e.class}: #{e.message}"
-        $stderr.puts e.backtrace
-        next exception_page(e, :assets=>true) if ENV['RACK_ENV'] == 'development'
-      end
-      # :nocov:
+      raise if ENV['RACK_ENV'] == 'test'
+
+      $stderr.puts "#{e.class}: #{e.message}"
+      $stderr.puts e.backtrace
+      next exception_page(e, :assets=>true) if ENV['RACK_ENV'] == 'development'
       @page_title = 'Internal Server Error'
       view(:content=>'')
+      # :nocov:
     end
   end
 
-  Unreloader.require(File.expand_path('../routes', __FILE__)){}
+  if Unreloader.autoload?
+    plugin :autoload_hash_branches
+    autoload_hash_branch(:root, 'application', './routes/application.rb')
+    autoload_hash_branch(:preauth, 'collect', './routes/collect.rb')
+  end
+  Unreloader.autoload(File.expand_path('../routes', __FILE__)){}
 
   route do |r|
     r.hash_branches(:preauth)

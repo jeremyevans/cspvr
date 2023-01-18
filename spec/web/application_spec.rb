@@ -92,6 +92,6 @@ describe '/application' do
     page.html.must_include 'Invalid field value'
 
     visit '/application/edit/0'
-    page.title.must_equal 'CSPVR - Internal Server Error'
+    page.title.must_equal 'CSPVR - File Not Found'
   end
 end

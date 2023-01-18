@@ -18,10 +18,10 @@ module Cspvr
 
   unless defined?(Unreloader)
     require 'rack/unreloader'
-    Unreloader = Rack::Unreloader.new(:reload=>false)
+    Unreloader = Rack::Unreloader.new(:reload=>false, :autoload=>!ENV['NO_AUTOLOAD'])
   end
 
-  Unreloader.require(File.expand_path('../models', __FILE__)){|f| "Cspvr::" + Sequel::Model.send(:camelize, File.basename(f).sub(/\.rb\z/, ''))}
+  Unreloader.autoload(File.expand_path('../models', __FILE__)){|f| "Cspvr::" + Sequel::Model.send(:camelize, File.basename(f).sub(/\.rb\z/, ''))}
 
   if ENV['RACK_ENV'] == 'development'
     require 'logger'

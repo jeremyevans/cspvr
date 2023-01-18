@@ -1,8 +1,11 @@
 module Cspvr
 class App
+  path(Application){|app, rest=""| "/application/#{app.id}#{rest}"}
+  path(CspReport){|rep, rest=""| "/application/#{rep.application_id}/report/#{rep.id}#{rest}"}
+
   hash_branch :root, 'application' do |r|
     r.is "edit", ["new", Integer] do |application_id|
-      @application = application_id == "new" ? Application.new(:account_id=>account_id) : application_ds.with_pk!(application_id)
+      next unless @application = application_id == "new" ? Application.new(:account_id=>account_id) : application_ds.with_pk(application_id)
 
       r.get do
         :application_form
@@ -19,7 +22,7 @@ class App
     end
 
     r.on Integer do |application_id|
-      @application = application_ds.with_pk!(application_id)
+      next unless @application = application_ds.with_pk(application_id)
 
       r.get true do
         @all = typecast_params.bool('all')

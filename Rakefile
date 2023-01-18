@@ -82,7 +82,7 @@ task :default => [:model_spec, :web_spec]
 
 desc "Run model specs"
 task :model_spec do
-  spec.call('./spec/model/*_spec.rb')
+  spec.call('./spec/model.rb')
 end
 
 desc "Run web specs"
@@ -90,16 +90,16 @@ task :web_spec => [:web_admin_spec, :web_collector_spec]
 
 desc "Run web admin specs"
 task :web_admin_spec do
-  spec.call('./spec/web/*_spec.rb')
+  spec.call('./spec/web.rb')
 end
 
 desc "Run web collector specs"
 task :web_collector_spec do
-  #spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'1')
+  #spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'1', 'NO_AUTOLOAD'=>'1')
 
   # Support testing using a separate database user with only INSERT access
   # to the csp_reports table
-  spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'separate_user')
+  spec.call('./spec/web/collector_spec.rb', 'CSPVR_COLLECTOR_ONLY'=>'separate_user', 'NO_AUTOLOAD'=>'1')
 end
 
 desc "Run specs with coverage"
