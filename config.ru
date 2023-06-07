@@ -11,6 +11,9 @@ require_relative 'models'
 Unreloader.require(File.expand_path('../app.rb', __FILE__)){'Cspvr::App'}
 run(dev ? Unreloader : Cspvr::App.freeze.app)
 
+require 'tilt/sass' unless File.exist?(File.expand_path('../compiled_assets.json', __FILE__))
+Tilt.finalize!
+
 unless dev
   begin
     require 'refrigerator'

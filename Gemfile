@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rack', '>= 1.6'
-gem 'tilt', '>= 2.0.10'
+gem 'tilt', '>= 2.2'
 gem 'sassc', '>= 2'
 gem 'erubi', '>= 1.11'
 gem 'roda', '>= 3.64'

@@ -3,7 +3,10 @@ require_relative 'models'
 
 require 'roda'
 require 'strscan' # needed for Rack::Multipart::Parser
-require 'tilt/sass'
+
+require 'tilt'
+require 'tilt/erubi'
+require 'tilt/string'
 
 module Cspvr
 # App initialization that does not get reloaded
@@ -53,7 +56,7 @@ class App < BaseApp
   plugin :disallow_file_uploads
   plugin :route_csrf
   plugin :assets, :css=>'app.scss', :css_opts=>{:style=>:compressed, :cache=>false}, :timestamp_paths=>true
-  plugin :render, :escape=>true, :template_opts=>{:chain_appends=>true}
+  plugin :render, :escape=>true, :template_opts=>{:chain_appends=>true, :freeze=>true, :skip_compiled_encoding_detection=>true}
   plugin :hash_branches
   plugin :symbol_views
   plugin :Integer_matcher_max

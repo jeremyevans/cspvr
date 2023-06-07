@@ -15,13 +15,13 @@ Gem.suffix_pattern
 ENV['CSPVR_SESSION_SECRET'] = SecureRandom.base64(48)
 
 require_relative(ENV["CSPVR_COLLECTOR_ONLY"] ? '../../collector' : '../../app')
+Tilt.finalize! if defined?(Tilt)
 
 raise "test database doesn't end with test" unless Cspvr::DB.opts[:database] =~ /test\z/
 
 Cspvr::App.freeze if ENV['NO_AUTOLOAD']
 Capybara.app = Cspvr::App.app
 Capybara.exact = true
-
 
 unless ENV['NO_AUTOLOAD']
   begin
