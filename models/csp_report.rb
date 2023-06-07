@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cspvr
 class CspReport < Model
   dataset_module do

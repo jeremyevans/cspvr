@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cspvr
 class App
   path(Application){|app, rest=""| "/application/#{app.id}#{rest}"}

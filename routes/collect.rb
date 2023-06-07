@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cspvr
 class App
   skip_re = /\A#{Regexp.union((<<-END).split)}/

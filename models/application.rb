@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Cspvr
 class Application < Model
   one_to_many :csp_reports, :order=>Sequel[:at].desc
