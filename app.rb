@@ -1,6 +1,7 @@
 require_relative 'models'
 
 require 'roda'
+require 'strscan' # needed for Rack::Multipart::Parser
 require 'tilt/sass'
 
 module Cspvr
