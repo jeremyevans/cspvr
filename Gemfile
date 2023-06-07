@@ -7,7 +7,7 @@ gem 'erubi', '>= 1.11'
 gem 'roda', '>= 3.64'
 gem 'rodauth', '>= 2'
 gem 'sequel', '>= 5.62'
-gem 'sequel_pg', '>= 1.7'
+gem 'sequel_pg', '>= 1.7', require: nil
 gem 'rack-unreloader', '>= 2.1'
 gem 'refrigerator', '>= 1'
 
