@@ -117,8 +117,8 @@ class App < BaseApp
 
   if Unreloader.autoload?
     plugin :autoload_hash_branches
-    autoload_hash_branch(:root, 'application', './routes/application.rb')
-    autoload_hash_branch(:preauth, 'collect', './routes/collect.rb')
+    autoload_hash_branch(:root, 'application', File.expand_path('../routes/application.rb', __FILE__))
+    autoload_hash_branch(:preauth, 'collect', File.expand_path('../routes/collect.rb', __FILE__))
   end
   Unreloader.autoload(File.expand_path('../routes', __FILE__)){}
 
