@@ -29,6 +29,7 @@ class BaseApp < Roda
     account_password_hash_column :password_hash
     title_instance_variable :@page_title
     login_input_type 'text'
+    already_logged_in{redirect '/'}
   end
   precompile_rodauth_templates
 end unless defined?(BaseApp)
